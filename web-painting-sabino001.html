@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sabino Canyon — Kevin P. McClain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --wall:#6b6458; --sand:#C9B99A; --cream:#F5F0E8; --nav-h:60px; }
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body {
+      font-family:'DM Sans',sans-serif; font-weight:300;
+      min-height:100vh; background-color:var(--wall);
+      color:var(--cream); position:relative; overflow-x:hidden;
+    }
+    body::before {
+      content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+      opacity:0.32;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.55'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23c)'/%3E%3C/svg%3E");
+      background-repeat:repeat; background-size:400px 400px; mix-blend-mode:overlay;
+    }
+    body::after {
+      content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+      background:linear-gradient(to right,rgba(255,248,230,.13) 0%,rgba(255,245,220,.07) 30%,rgba(107,100,88,0) 68%,rgba(107,100,88,0) 100%);
+    }
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:200;
+      background:rgba(42,38,34,.96); border-bottom:1px solid rgba(201,185,154,.2);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 4vw; height:var(--nav-h); backdrop-filter:blur(10px);
+    }
+    .nav-name {
+      font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:600;
+      letter-spacing:.04em; color:var(--sand); text-decoration:none; transition:color .2s;
+    }
+    .nav-name:hover { color:var(--cream); }
+    .nav-back {
+      font-size:.78rem; letter-spacing:.12em; text-transform:uppercase;
+      color:rgba(201,185,154,.65); text-decoration:none; transition:color .2s;
+    }
+    .nav-back:hover { color:var(--sand); }
+    .page-content {
+      position:relative; z-index:1; max-width:760px;
+      margin:0 auto; padding:calc(var(--nav-h) + 60px) 4vw 80px;
+    }
+    .painting-caption {
+      font-size:.85rem; color:rgba(245,240,232,.80);
+      line-height:1.65; margin-bottom:2rem; white-space:pre-line;
+    }
+    .painting-block { margin-bottom:2.4rem; }
+    .img-link {
+      display:block; text-decoration:none;
+      overflow:hidden; position:relative;
+      border:1px solid rgba(201,185,154,.18);
+    }
+    .img-link::after {
+      content:'\2922  View full size'; position:absolute;
+      bottom:0; left:0; right:0; padding:.5rem .8rem;
+      background:rgba(20,16,12,.72); color:var(--sand);
+      font-size:.7rem; letter-spacing:.1em; text-transform:uppercase;
+      opacity:0; transition:opacity .2s;
+    }
+    .img-link:hover::after { opacity:1; }
+    .img-link img {
+      width:100%; height:auto; display:block; transition:transform .35s ease;
+      box-shadow:0 4px 20px rgba(0,0,0,.4),0 16px 48px rgba(0,0,0,.28);
+    }
+    .img-link:hover img { transform:scale(1.01); }
+    .back-link {
+      display:inline-block; margin-top:1rem;
+      font-size:.78rem; letter-spacing:.12em; text-transform:uppercase;
+      color:rgba(201,185,154,.65); text-decoration:none;
+    }
+    .back-link:hover { color:var(--sand); }
+    .lightbox {
+      display:none; position:fixed; inset:0; z-index:500;
+      background:rgba(20,16,12,.94); align-items:center;
+      justify-content:center; padding:2rem; cursor:zoom-out;
+    }
+    .lightbox.open { display:flex; }
+    .lightbox img { max-width:100%; max-height:90vh; object-fit:contain; box-shadow:0 20px 60px rgba(0,0,0,.6); }
+    .lightbox-close {
+      position:absolute; top:1.2rem; right:1.6rem;
+      color:var(--sand); font-size:1.6rem; cursor:pointer;
+      background:none; border:none; line-height:1;
+    }
+    footer {
+      position:relative; z-index:1; padding:1.6rem 4vw;
+      background:rgba(30,26,22,.80); border-top:1px solid rgba(201,185,154,.12);
+      color:rgba(201,185,154,.5); font-size:.95rem;
+      display:flex; justify-content:center; align-items:center;
+      flex-wrap:wrap; gap:.5rem;
+    }
+    footer span { color:var(--sand); }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-name">Kevin P. McClain, PhD</a>
+  <a href="web-paintings006.html" class="nav-back">&#8592; Back to Paintings</a>
+</nav>
+<div class="page-content">
+  <p class="painting-caption">If anything I paint is considered a masterpiece, this one would have a chance. I took a picture of a south-facing ridge after walking around a bend in Sabino Canyon in Tucson Arizona. It was late afternoon in October and everything still had its summer green. I also liked the way the angle of a slowly setting afternoon sun was hitting the horizontal cracks in the gneiss layers.
+
+The challenge of producing this painting was deciding how much detail to use. Had I gone for a more atmospheric and blurry effect, I could have given it more of a realistic feel. Instead I went for as much detail as possible with as fine a brush as I could find. It gave the painting many contrasts, but also caused a cartoonish or comic book feel.
+
+The exciting thing about bringing a painting like this to life is that I never know exactly how it will turn out. I had a different expectation but had to settle for the rock and vegetation colors in the hues that I was able to blend. The vegetation color of the Sonoran Desert is particularly tricky to nail. It is a light green with some blue, but its appearance changes with some shadows.
+
+This painting ended up being the most enjoyable that I have worked on so far. That is a good thing because it took over 6 months chipping away little by little when I had time on the weekends!
+
+Acrylic on canvas</p>
+  <div class="painting-block">
+    <a class="img-link" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/sabino-full1.jpg" data-lb>
+      <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/sabino-full1.jpg" alt="Sabino Canyon, Tucson Arizona" loading="lazy" decoding="async">
+    </a>
+  </div>
+  <div class="painting-block">
+    <a class="img-link" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/sabino-full2.jpg" data-lb>
+      <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/sabino-full2.jpg" alt="Sabino Canyon — detail" loading="lazy" decoding="async">
+    </a>
+  </div>
+  <div class="painting-block">
+    <a class="img-link" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/sabino-thumb.jpg" data-lb>
+      <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/sabino-thumb.jpg" alt="Sabino Canyon — thumbnail" loading="lazy" decoding="async">
+    </a>
+  </div>
+  <a href="web-paintings006.html" class="back-link">&#8592; Back to paintings</a>
+</div>
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lbc">&#10005;</button>
+  <img src="" alt="" id="lbi">
+</div>
+<footer>
+  <span>Kevin P. McClain, PhD</span>
+
+</footer>
+<script>
+  const lb=document.getElementById('lightbox'),lbi=document.getElementById('lbi');
+  document.getElementById('lbc').onclick=()=>lb.classList.remove('open');
+  lb.onclick=e=>{if(e.target===lb)lb.classList.remove('open');};
+  document.onkeydown=e=>{if(e.key==='Escape')lb.classList.remove('open');};
+  document.querySelectorAll('[data-lb]').forEach(a=>{
+    a.onclick=e=>{e.preventDefault();lbi.src=a.href;lbi.alt=a.querySelector('img').alt;lb.classList.add('open');};
+  });
+</script>
+</body>
+</html>
