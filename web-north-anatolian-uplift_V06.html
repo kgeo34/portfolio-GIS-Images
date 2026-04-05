@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quaternary Rock Uplift Rates — Kevin P. McClain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
+  <style>
+    :root {
+      --bg:        #E6F9F3;
+      --surface:   #A8F0D4;
+      --surface2:  #93E4C1;
+      --rule:      #7DCFAA;
+      --accent:    #2A6B50;
+      --accent2:   #1D4D39;
+      --ink:       #0F2D20;
+      --text-body: #1A3D2C;
+      --text-muted:#3D6B52;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text-body); font-family: 'DM Sans', sans-serif; font-weight: 300; font-size: 16px; line-height: 1.7; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--bg); border-bottom: 1px solid var(--rule);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 4vw; height: 60px;
+    }
+    .nav-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; letter-spacing: 0.04em; color: var(--accent2); text-decoration: none; }
+    .nav-back { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: var(--accent); }
+
+    .project-hero { padding: 110px 5vw 60px; max-width: 72%; }
+    .project-eyebrow { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+    .project-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.6rem, 3vw, 2.6rem); font-weight: 300; line-height: 1.25; color: var(--ink); margin-bottom: 1.2rem; }
+    .project-meta { display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .meta-item { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+    .meta-item strong { display: block; color: var(--accent); margin-bottom: 0.2rem; font-weight: 500; }
+
+    /* Wide article content column */
+    .project-content { max-width: 72%; padding: 0 5vw 80px; }
+
+    /* Full-width image blocks for article-style layout */
+    .figure-block { margin: 2.4rem 0; }
+
+    .img-link {
+      display: block;
+      text-decoration: none;
+      border: 1px solid var(--rule);
+      overflow: hidden;
+      background: var(--surface);
+      position: relative;
+      width: 100%;
+    }
+    .img-link::after {
+      content: '⤢ View full size';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 0.5rem 0.8rem;
+      background: rgba(15, 45, 32, 0.78);
+      color: var(--bg);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .img-link:hover::after { opacity: 1; }
+    .img-link img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.35s ease;
+    }
+    .img-link:hover img { transform: scale(1.01); }
+
+    .figure-number {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.3rem;
+      margin-top: 0.7rem;
+    }
+    .img-caption {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+      line-height: 1.65;
+    }
+    .img-caption em { font-style: italic; }
+
+    /* Body text */
+    .project-content h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; color: var(--ink); margin: 2.8rem 0 0.8rem; }
+    .project-content p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.2rem; line-height: 1.85; }
+    .project-content a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--rule); }
+    .project-content a:hover { border-color: var(--accent); }
+
+    /* Abstract block — slightly set apart */
+    .abstract-block {
+      border-left: 2px solid var(--rule);
+      padding-left: 1.4rem;
+      margin: 1.6rem 0 2.4rem;
+    }
+    .abstract-block p {
+      font-size: 1.05rem;
+      color: var(--text-body);
+      line-height: 1.9;
+    }
+
+    /* Two-column caption layout */
+    .img-caption-two-col {
+      column-count: 2;
+      column-gap: 2rem;
+      font-size: 0.97rem;
+      color: var(--text-muted);
+      margin-top: 0.6rem;
+      line-height: 1.75;
+    }
+    .img-caption-two-col p {
+      font-size: inherit;
+      color: inherit;
+      margin-bottom: 0.8rem;
+      line-height: inherit;
+      break-inside: avoid;
+    }
+    @media (max-width: 640px) {
+      .img-caption-two-col { column-count: 1; }
+    }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .tag { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; background: var(--surface); border: 1px solid var(--rule); color: var(--text-muted); padding: 0.3rem 0.7rem; }
+
+    .pub-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.7rem 1.6rem; border: 1px solid var(--rule);
+      color: var(--accent2); text-decoration: none; font-size: 0.8rem;
+      letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.5rem;
+      transition: background 0.2s; border-bottom: none;
+    }
+    .pub-link:hover { background: var(--surface); }
+
+    .back-link { display: inline-block; margin: 2.4rem 0 0; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; border: none !important; }
+    .back-link:hover { color: var(--accent); }
+
+    /* Lightbox */
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(15, 45, 32, 0.92);
+      align-items: center; justify-content: center;
+      padding: 2rem; cursor: zoom-out;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 100%; max-height: 90vh; object-fit: contain; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+    .lightbox-close {
+      position: absolute; top: 1.2rem; right: 1.6rem;
+      color: var(--rule); font-size: 1.6rem; cursor: pointer;
+      line-height: 1; background: none; border: none; font-family: sans-serif;
+    }
+
+    footer { padding: 1.6rem 4vw; background: var(--ink); color: var(--text-muted); font-size: 0.95rem; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    footer span { color: var(--rule); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-name">Kevin P. McClain, PhD</a>
+  <a href="index.html#research" class="nav-back">← Back to Portfolio</a>
+</nav>
+
+<div class="project-hero">
+  <p class="project-eyebrow">PhD Research · EU Marie Curie Program · Published 2020</p>
+  <h1>Quaternary Rock Uplift Rates and Their Implications for the Western Flank of the North Anatolian Fault Restraining Bend; Inferences From Fluvial Terrace Ages</h1>
+  <div class="project-meta">
+    <div class="meta-item"><strong>Type</strong>Scientific Article</div>
+    <div class="meta-item"><strong>Year</strong>2020</div>
+    <div class="meta-item"><strong>Tools</strong>OSL Dating · ArcGIS · Illustrator · UAV · dGPS</div>
+    <div class="meta-item"><strong>Distribution</strong>Tectonics (Wiley &amp; American Geophysical Union)</div>
+  </div>
+</div>
+
+<div class="project-content">
+<h2>Abstract</h2>
+  <div class="abstract-block">
+    <p>In the western flank of the North Anatolian Fault restraining bend (i.e., Central Pontides), the Filyos River incises through the uplifting Karabük Range, creating the ~1.7‐km‐deep Filyos River Gorge on the hanging wall of the reverse Karabük Fault. Seven fluvial strath terrace levels are preserved in this gorge. Optically stimulated luminescence ages from quartz‐rich sediments of five terrace levels reveal an average long‐term rock uplift rate of 0.45 ± 0.02 mm yr⁻¹ with an unsteady pattern of uplift during the last 542 ± 24 kyr. Uplift rates of 1.52 ± 0.6 and 0.74 ± 0.3 mm yr⁻¹ occurred before 366 ± 19 kyr, followed by lower rates of ~0.1 and 0.31 mm yr⁻¹ through present. These later uplift rates may reflect relatively slower tectonic rates since ~366 kyr, with closer similarity to regional uplift rates of ~0.3 mm yr⁻¹ yielded from the eastern flank of the Central Pontides. The Karabük Range fluvial terraces are near the North Anatolian Fault, meaning pre‐ ~366 kyr uplift rates may be a glimpse of the highest Central Pontides Quaternary rock uplift rates on uplifting hanging wall blocks activated by the restraining bend. When we consider offshore seismic reflection data, the focal mechanism solution of the Bartın Earthquake, onshore structural data, and regional tectonic geomorphology, the western flank of the Central Anatolian Plateau's northern margin is propagating northward as a growing orogenic wedge with a positive flower‐structure geometry.</p>
+  </div>
+
+  <!-- Figure 0 -->
+  <div class="figure-block">
+    <a class="img-link" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/firgure0.jpg" data-lightbox>
+      <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/firgure0.jpg" alt="Figure 0 — Study area overview" loading="lazy" decoding="async">
+    </a>
+    <p class="figure-number">Figure 1</p>
+    <div class="img-caption-two-col">
+      <p>In Figure 1 (a), I wanted to show the location of the Central Pontides in relation to the Central Anatolian Plateau. The study area is highlighted in yellow and a dashed box shows the extent of the map below in Figure 1 (b).</p>
+      <p>There are several important features to pay attention to in Figure 1 (b). The North Anatolian Fault has a geometry where transpressional tectonics associated with uplift are expected. The 2016 earthquake that is far offshore in the Black Sea shows a compressional focal mechanism, which can indicate uplift associated with the horizontal growth of the Central Anatolian Plateau.</p>
+      <p>In the larger picture, the Anatolian Plate is seen "escaping" to the west and southwest and rotating counterclockwise. In the east the Arabian Plate subducts underneath the Anatolian Plate along the Bitlis-Zagros Collision Zone and East Anatolian Fault. This squeezes the eastern portions of the Anatolian microplate and causes a very rapid westward escape and counterclockwise rotation.</p>
+      <p>The main features of this tectonic regime are the Central Anatolian Plateau, transform boundaries of the North and East Anatolian Faults, the extension of western Anatolia and the Aegean Sea Plate, and the rapid trench retreat of the Hellenic and Cyprus Trenches, both of which subduct the African Plate.</p>
+      <p>In Figure 1(b), my intention was to make a map that shows the study area, known and suspected faults, the 20th Century earthquake migrations of the North Anatolian Fault Zone, the focal mechanisms of major earthquakes, and the topography and river network.</p>
+      <p>We can see the change in focal mechanism from the transform North Anatolian Fault to the thrust fault in the near shore earthquake in 1968. Because our study is concerned with rock uplift rates, sites of previous rock uplift rate studies are included. Also the velocities of the Anatolian Plate and slip rates of the North Anatolian Fault are labeled. The Eurasian Plate is essentially stationary in relation to other plates since its horizontal deformation rates are very low.</p>
+    </div>
+  </div>
+
+  <!-- Figure 1 -->
+  <div class="figure-block">
+    <a class="img-link" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure1.png" data-lightbox>
+      <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure1.png" alt="Figure 1" loading="lazy" decoding="async">
+    </a>
+    <p class="figure-number">Figure 2</p>
+    <div class="img-caption-two-col">
+      <p>The goal of this map is to show the topographic relief created by the fluvial incision of rivers in an uplifting environment. To do this, I showed a shaded DSM of the western Central Pontides. I created swath profiles going in two directions (green dashed boxes on the map) and these profiles are seen below.</p>
+      <p>To understand swath profiles, think of a line drawn across the landscape that shows the profile of the topography. Instead of a line, we have a rectangle with two ends. For each meter along the rectangle, starting from A and ending in A' or starting in B and ending in B', the swath tool calculates the highest, lowest, and mean elevation at each meter along the length of the rectangle.</p>
+      <p>The reason for these swaths is to show the degree of river incision into the landscape and to demonstrate that although some of the elevation in the Central Pontides may be antecedent to the current tectonic regime, there is likely uplift acting on the landscape, in particular along the North Anatolian Fault Zone and on the hanging wall side of the Karabuk Thrust Fault.</p>
+      <p>Notice how the Filyos River does not show a major profile change around the Karabuk Fault while the rest of the landscape does show more topographic relief. This is where fluvial terrace ages will help.</p>
+    </div>
+  </div>
+
+  <!-- Figure 2 -->
+  <div class="figure-block">
+    <a class="img-link" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure2.png" data-lightbox>
+      <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure2.png" alt="Figure 2" loading="lazy" decoding="async">
+    </a>
+    <p class="figure-number">Figure 3</p>
+    <div class="img-caption-two-col">
+      <p>A.) A geologic map of the study area</p>
+      <p>B.) The main geologic units of the study region</p>
+      <p>C.) A topographic map of the study area and river network in relation to the Karabuk Fault.</p>
+      <p>D.) Photo of old Sanfranbolu with the Karabuk Range in the background</p>
+      <p>E.) The Kardemir Steel Factory, with the Karabuk Range and approximate location of the fault in the background</p>
+      <p>F.) Geologic layers along the Filyos River on the footwall of the reverse fault</p>
+    </div>
+  </div>
+
+  <!-- Figure 3 -->
+  <div class="figure-block">
+    <a class="img-link" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure3.png" data-lightbox>
+      <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure3.png" alt="Figure 3" loading="lazy" decoding="async">
+    </a>
+    <p class="figure-number">Figure 4</p>
+    <div class="img-caption-two-col">
+      <p>A.) UAV-generated DSM of the fluvial strath terrace staircase around the village of Bolkus. The red dashed line corresponds with the elevation profile of Figure 6B on this page.</p>
+      <p>B.) A larger map showing distribution of all fluvial terraces found in the study area, including the oldest known terrace that was sampled for OSL dating.</p>
+      <p>C.) Normalize steepness index map showing the degree of incision in the Filyos River Gorge</p>
+    </div>
+  </div>
+
+  <!-- Figure 3.1 -->
+  <div class="figure-block">
+    <a class="img-link" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure3.1.png" data-lightbox>
+      <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure3.1.png" alt="Figure 3.1" loading="lazy" decoding="async">
+    </a>
+    <p class="figure-number">Figure 5</p>
+    <div class="img-caption-two-col">
+      <p>A.) Three OSL Samples from the fluvial terrace sediment overlying the bedrock strath. This was the second youngest terrace.</p>
+      <p>B.) A picture of Hanging Valleys</p>
+      <p>C.) A picture of the Filyos River Gorge and a hanging valley</p>
+      <p>D.) View of the lower fluvial terrace staircase around the village of Bolkus.</p>
+    </div>
+  </div>
+
+  <!-- Figure 4 -->
+  <div class="figure-block">
+    <a class="img-link" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure4.png" data-lightbox>
+      <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure4.png" alt="Figure 4" loading="lazy" decoding="async">
+    </a>
+    <p class="figure-number">Figure 6</p>
+    <div class="img-caption-two-col">
+      <p>This figure was not included in the publications but was included in my PhD thesis. I wanted to show locations of hanging valleys and landslide, in particular the landslide that was written about when interpretating the terrace ages and rock uplift rates. The middle chart shows the elevations of the hanging valleys in comparison to the Filyos River and Karabuk Fault. The lower chart shows the entire stream profile of the Filyos River. Notice how it deviates from the typical concave-up river profile. This is due to the North Anatolian Fault lateral displacement. The river flows along the fault, where its length is extended over time due to the strike-slip motion of the fault.</p>
+    </div>
+  </div>
+
+  <!-- Figure 4.1 PNG -->
+  <div class="figure-block">
+    <a class="img-link" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure4.1.png" data-lightbox>
+      <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure4.1.png" alt="Figure 4.1" loading="lazy" decoding="async">
+    </a>
+    <p class="figure-number">Figure 7</p>
+    <div class="img-caption-two-col">
+      <p>The west side of the Karabuk Range is also suspected to have a thrust fault or a thrust fault with a strike-slip component. I exported stream profiles and placed knickpoints where fault activity may result in disruptions of the stream profiles. When looking at the map, we were unable to show a knickpoint associated with a suspected fault. Instead, we most likely have lithological imprints.</p>
+    </div>
+  </div>
+
+  <!-- Figure 4.1 JPG -->
+  <div class="figure-block">
+    <a class="img-link" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure4.1.jpg" data-lightbox>
+      <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure4.1.jpg" alt="Figure 4.1 photograph" loading="lazy" decoding="async">
+    </a>
+    <p class="figure-number">Figure 8</p>
+    <div class="img-caption-two-col">
+      <p>Here is an elevation profile illustrating the fluvial terrace staircase. The profile with the dashed line was extracted directly from our UAV-generated DSM.</p>
+    </div>
+  </div>
+
+  <!-- Figure 9 -->
+  <div class="figure-block">
+    <a class="img-link" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure9.png" data-lightbox>
+      <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure9.png" alt="Figure 9 — Tectonic model" loading="lazy" decoding="async">
+    </a>
+    <p class="figure-number">Figure 9</p>
+    <div class="img-caption-two-col">
+      <p>Here is the tectonic model we proposed for the western flank of the Central Pontides. I absolutely love making maps like this. It feels awesome to observe things at the earth surface in order to describe processes that happen kilometers below the surface. If I could do this over again, I might choose a traditional elevation color ramp with brown representing high elevations. I was reluctant to do this since this region tends to get VERY GREEN with elevation. I think it would have stood on its own quite well with traditional colors.</p>
+    </div>
+  </div>
+
+  <a class="pub-link" href="https://doi.org/10.1029/2019TC005993" target="_blank">Read the full publication in Tectonics →</a>
+
+  <a href="index.html#research" class="back-link">← Back to portfolio</a>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close">✕</button>
+  <img src="" alt="" id="lightbox-img">
+</div>
+
+<footer>
+  <span>Kevin P. McClain, PhD</span>
+
+</footer>
+
+<script>
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxClose = document.getElementById('lightbox-close');
+
+  document.querySelectorAll('[data-lightbox]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      lightboxImg.src = link.href;
+      lightboxImg.alt = link.querySelector('img').alt;
+      lightbox.classList.add('open');
+    });
+  });
+
+  lightboxClose.addEventListener('click', () => lightbox.classList.remove('open'));
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('open'); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') lightbox.classList.remove('open'); });
+</script>
+
+</body>
+</html>
