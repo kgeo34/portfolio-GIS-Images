@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kevin P. McClain, PhD — Cartographer & Earth Scientist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
+  <style>
+    :root {
+      --cream:     #F5F0E8;
+      --warm-off:  #EDE7D9;
+      --sand:      #C9B99A;
+      --terracotta:#9E6B4A;
+      --umber:     #5C3D2E;
+      --ink:       #2A1F1A;
+      --light-rule:#D9CFBD;
+      --text-body: #3D2E25;
+      --text-muted: #8A7060;
+      --footer-bg: #704f48;
+      --footer-mountain: #483f40;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--text-body);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--cream);
+      border-bottom: 1px solid var(--light-rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4vw;
+      height: 60px;
+    }
+
+    .nav-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--umber);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.4rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--terracotta); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 60px 0 0;
+    }
+
+    .hero-cover {
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+    }
+
+    .hero-cover img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    .hero-desc {
+      font-size: 1.22rem;
+      color: var(--text-muted);
+      max-width: 780px;
+      line-height: 1.8;
+      padding: 2.4rem 4vw 2.8rem;
+    }
+
+    /* ── SECTION HEADERS ── */
+    .section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 300;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-intro {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 520px;
+      margin-bottom: 3rem;
+    }
+
+    /* ── PORTFOLIO SECTIONS ── */
+    .portfolio-section {
+      padding: 80px 4vw;
+      border-top: 1px solid var(--light-rule);
+      content-visibility: auto;
+      contain-intrinsic-size: 0 800px; /* rough height estimate prevents scroll jump */
+    }
+
+    .portfolio-section:nth-child(even) {
+      background: var(--warm-off);
+    }
+
+    /* ── PROJECT CARDS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2px;
+      margin-top: 0.5rem;
+    }
+
+    .project-card {
+      background: var(--cream);
+      border: 1px solid var(--light-rule);
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.25s, transform 0.25s;
+      cursor: pointer;
+    }
+
+    .portfolio-section:nth-child(even) .project-card {
+      background: var(--cream);
+    }
+
+    .project-card:hover {
+      box-shadow: 0 8px 32px rgba(94,61,46,0.10);
+      transform: translateY(-3px);
+      z-index: 1;
+    }
+
+    .project-img {
+      width: 100%;
+      aspect-ratio: 16/10;
+      background: var(--warm-off);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .project-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .project-card:hover .project-img img {
+      transform: scale(1.03);
+    }
+
+    .project-img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--warm-off) 0%, var(--light-rule) 100%);
+    }
+
+    .project-img-placeholder span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      color: var(--sand);
+      font-style: italic;
+    }
+
+    .project-body {
+      padding: 1.6rem 1.8rem 2rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-tag {
+      font-size: 0.66rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 0.5rem;
+    }
+
+    .project-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.3;
+      margin-bottom: 0.7rem;
+    }
+
+    .project-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .project-footer {
+      margin-top: 1.4rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--light-rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .project-tools {
+      font-size: 0.72rem;
+      color: var(--sand);
+      letter-spacing: 0.06em;
+    }
+
+    .project-link {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: gap 0.2s;
+    }
+
+    .project-link:hover { gap: 0.6rem; }
+
+    /* ── FEATURED (large card) ── */
+    .project-card.featured {
+      grid-column: 1 / -1;
+      flex-direction: column;
+    }
+
+    .project-card.featured .project-img {
+      width: 100%;
+      flex-shrink: 0;
+      aspect-ratio: 21/9;
+      min-height: unset;
+    }
+
+    @media (max-width: 700px) {
+      .project-card.featured { flex-direction: column; }
+      .project-card.featured .project-img { width: 100%; aspect-ratio: 16/10; }
+    }
+
+    /* ── ABOUT ── */
+    .about-section {
+      padding: 80px 4vw;
+      border-top: 1px solid var(--light-rule);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6vw;
+      align-items: start;
+      content-visibility: auto;
+      contain-intrinsic-size: 0 500px;
+    }
+
+    @media (max-width: 720px) {
+      .about-section { grid-template-columns: 1fr; }
+    }
+
+    .about-text p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      line-height: 1.85;
+    }
+
+    .about-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+    }
+
+    .detail-block {}
+
+    .detail-label {
+      font-size: 0.66rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 0.4rem;
+    }
+
+    .detail-value {
+      font-size: 0.9rem;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+
+    /* ── CONTACT ── */
+    .contact-section {
+      padding: 80px 4vw;
+      border-top: 1px solid var(--light-rule);
+      background: var(--footer-bg);
+      content-visibility: auto;
+      contain-intrinsic-size: 0 300px;
+    }
+
+    .contact-section .section-label { color: var(--sand); }
+    .contact-section .section-title { color: var(--cream); }
+    .contact-section .section-intro { color: var(--sand); }
+
+    .contact-links {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.6rem;
+      border: 1px solid var(--sand);
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .contact-link:hover {
+      background: var(--sand);
+      color: var(--umber);
+    }
+
+    /* ── PAINTINGS ENTRY ── */
+    .paintings-entry { padding-bottom: 60px; }
+
+    .paintings-heading-link {
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 1.6rem;
+    }
+
+    .paintings-title {
+      font-size: clamp(2.4rem, 5vw, 4rem) !important;
+      transition: color 0.2s;
+    }
+
+    .paintings-heading-link:hover .paintings-title { color: var(--terracotta); }
+
+    .paintings-thumb-link {
+      display: block;
+      max-width: 420px;
+      overflow: hidden;
+      border: 1px solid var(--light-rule);
+    }
+
+    .paintings-preview-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .paintings-thumb-link:hover .paintings-preview-img { transform: scale(1.03); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 0;
+      background: var(--footer-bg);
+      overflow: hidden;
+      line-height: 0;
+    }
+
+    .mountain-silhouette {
+      display: block;
+      width: 100%;
+      height: 160px;
+    }
+
+    /* Reveal: no animation — content-visibility handles deferred rendering more efficiently */
+    .reveal { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#top" class="nav-name">Kevin P. McClain, PhD</a>
+  <ul class="nav-links">
+    <li><a href="#gis">GIS Work</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#paintings">Paintings</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="top" class="hero">
+  <div class="hero-cover">
+    <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/thumb-aravaipa2.jpg" alt="Aravaipa Canyon — Kevin P. McClain" loading="eager" decoding="async">
+  </div>
+</section>
+
+<!-- GIS SECTION -->
+<section id="gis" class="portfolio-section">
+  <p class="section-label">Municipal &amp; Applied GIS</p>
+  <h2 class="section-title">GIS at the Town of Marana</h2>
+  <p class="section-intro">Production cartography, utility data management, and geospatial applications for a rapidly growing Arizona municipality.</p>
+
+  <div class="projects-grid">
+
+    <a class="project-card featured reveal" href="web-marana-addressing002.html">
+      <div class="project-img">
+        <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/temporal-address-20260329.png" alt="City-Wide Addressing Program — Town of Marana" loading="lazy" decoding="async">
+      </div>
+      <div class="project-body">
+        <p class="project-tag">Addressing · Municipal GIS</p>
+        <h3 class="project-title">City-Wide Addressing Program</h3>
+        <p class="project-desc">Managing and maintaining the authoritative addressing database for Marana's rapid urban growth — coordinating across Fire, County, utilities, builders, and USPS to ensure data consistency across all agencies.</p>
+        <div class="project-footer">
+          <span class="project-tools">ArcGIS Pro · Survey123 · Excel</span>
+          <span class="project-link">View project →</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="project-card reveal" href="web-marana-move001.html">
+      <div class="project-img">
+        <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/Tort-Mighty2026.jpg" alt="MOVE Across 2 Ranges Hiking Challenge Map" loading="lazy" decoding="async">
+      </div>
+      <div class="project-body">
+        <p class="project-tag">Event Cartography · Parks · Trails</p>
+        <h3 class="project-title">MOVE Across 2 Ranges Hiking Challenge</h3>
+        <p class="project-desc">Starting in 2023, I began doing the cartography for the MOVE Across 2 Ranges that happens every February. The event has four trail-difficulty choices, requiring a hike through the Tortolitas then the Santa Catalinas.</p>
+        <div class="project-footer">
+          <span class="project-tools">ArcGIS Pro · Excel · Illustrator</span>
+          <span class="project-link">View project →</span>
+        </div>
+      </div>
+    </a>
+
+
+
+    <a class="project-card reveal" href="web-marana-parks001.html">
+      <div class="project-img">
+        <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/Crossroads-Silverbell-Park.jpg" alt="Marana Parks Map" loading="lazy" decoding="async">
+      </div>
+      <div class="project-body">
+        <p class="project-tag">Cartography · Parks</p>
+        <h3 class="project-title">Marana Parks</h3>
+        <p class="project-desc">I created maps of all Town of Marana parks. This required visits to parks where I compared old data to existing features. It was an excuse to bring park data up to date.</p>
+        <div class="project-footer">
+          <span class="project-tools">ArcGIS Pro · Illustrator · UAV</span>
+          <span class="project-link">View project →</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="project-card reveal" href="web-marana-subdivisions005.html">
+      <div class="project-img">
+        <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/subs_post_2022.jpg" alt="2022 Marana Subdivisions Map" loading="lazy" decoding="async">
+      </div>
+      <div class="project-body">
+        <p class="project-tag">Cartography · Municipal Reference</p>
+        <h3 class="project-title">Subdivisions in 2022</h3>
+        <p class="project-desc">The local post office asked for a large map print of Marana with zip code boundaries and all subdivisions. This is what I came up with.</p>
+        <div class="project-footer">
+          <span class="project-tools">ArcGIS Pro · Illustrator</span>
+          <span class="project-link">View project →</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="project-card reveal" href="web-marana-reference-map002.html">
+      <div class="project-img">
+        <!-- IMPORTANT: Replace this PNG with a JPEG export — ArcGIS PNGs can be 30–80 MB and will crash browsers.
+             Export from ArcGIS/Illustrator as JPEG at ~150dpi, then re-upload to your GitHub image repo. -->
+        <div class="project-img-placeholder"><span>Reference Map</span></div>
+      </div>
+      <div class="project-body">
+        <p class="project-tag">Cartography · Municipal Reference</p>
+        <h3 class="project-title">2022 Town Reference Map and Municipal Facilities</h3>
+        <p class="project-desc">My first duty at the Town of Marana was to update the reference map for the town. I went with a plain phonebook-like map that attempted to show the basic features of a city.</p>
+        <div class="project-footer">
+          <span class="project-tools">ArcGIS Pro · Illustrator</span>
+          <span class="project-link">View project →</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- RESEARCH SECTION -->
+<section id="research" class="portfolio-section">
+  <p class="section-label">PhD Research · EU Marie Curie Program</p>
+  <h2 class="section-title">Geoscience Maps &amp; Illustrations</h2>
+  <p class="section-intro">Publication-quality maps, terrain analyses, tectonic diagrams, and research infographics from doctoral research on the North Anatolian Fault system.</p>
+
+  <div class="projects-grid">
+
+    <a class="project-card featured reveal" href="web-north-anatolian-uplift_V06.html">
+      <div class="project-img">
+        <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure9.png" alt="Quaternary Rock Uplift Rates — North Anatolian Fault" loading="lazy" decoding="async">
+      </div>
+      <div class="project-body">
+        <p class="project-tag">Scientific Article · Published 2020</p>
+        <h3 class="project-title">Quaternary Rock Uplift Rates and Their Implications for the Western Flank of the North Anatolian Fault Restraining Bend</h3>
+        <p class="project-desc">Fluvial terrace dating and GIS terrain analysis revealing 540,000 years of unsteady rock uplift history along the Filyos River Gorge, Central Pontides. Published in <em>Tectonics</em> (Wiley / AGU), 2020.</p>
+        <div class="project-footer">
+          <span class="project-tools">OSL Dating · ArcGIS · Illustrator · UAV · dGPS</span>
+          <span class="project-link">View project →</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="project-card reveal" href="web-river-fan-landslide002.html">
+      <div class="project-img">
+        <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure5.png" alt="Local geomorphology map and diagram — Central Pontides" loading="lazy" decoding="async">
+      </div>
+      <div class="project-body">
+        <p class="project-tag">Fluvial Geomorphology · Published 2021</p>
+        <h3 class="project-title">River, alluvial fan and landslide interactions in a tributary junction setting</h3>
+        <p class="project-desc">OSL and cosmogenic dating of fill terraces and alluvial fans revealing the role of climate, hillslope processes, and aggradation in masking tectonic uplift signals. Published in <em>Geomorphology</em> (Elsevier), 2021.</p>
+        <div class="project-footer">
+          <span class="project-tools">OSL · Cosmogenic · LiDAR · ArcGIS · UAV · dGPS</span>
+          <span class="project-link">View project →</span>
+        </div>
+      </div>
+    </a>
+
+
+
+    <a class="project-card reveal" href="web-agu-egu-posters001.html">
+      <div class="project-img">
+        <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/poster-egu.jpg" alt="AGU and EGU Conference Posters" loading="lazy" decoding="async">
+      </div>
+      <div class="project-body">
+        <p class="project-tag">Event Cartography · Conference</p>
+        <h3 class="project-title">AGU and EGU Posters</h3>
+        <p class="project-desc">The goal of the PhD was to use rock uplift rates in the Turkish Central Pontides to demonstrate the landscape response to uplift and climate.</p>
+        <div class="project-footer">
+          <span class="project-tools">ArcGIS Pro · Illustrator · OSL</span>
+          <span class="project-link">View project →</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- PAINTINGS SECTION -->
+<section id="paintings" class="portfolio-section paintings-entry">
+  <p class="section-label">Fine Art</p>
+  <a href="web-paintings006.html" class="paintings-heading-link">
+    <h2 class="section-title paintings-title">Paintings</h2>
+  </a>
+  <a href="web-paintings006.html" class="paintings-thumb-link">
+    <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/uskudar-thumb.jpg" alt="Paintings — Kevin P. McClain" class="paintings-preview-img">
+  </a>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about-section">
+  <div class="about-text reveal">
+    <p class="section-label">About</p>
+    <h2 class="section-title" style="margin-bottom:1.4rem;">Kevin P. McClain, PhD</h2>
+    <p>I am a Senior GIS Analyst and physical geographer with a doctorate in Earth Science from Istanbul Technical University. My work spans municipal GIS, geoscientific illustration, and cartography, with a particular interest in how maps can make complex spatial information legible to both specialists and non-specialists. I also started painting recently.</p>
+    <p>I am currently based in Arizona but hopefully not forever. 11 years in Europe radicalized me to appreciate vibrant cities, which we do not have here. I also do not want to continue experiencing climate change in an extreme climate like the Sonoran Desert.</p>
+  </div>
+  <div class="about-details reveal">
+    <div class="detail-block">
+      <p class="detail-label">Current Role</p>
+      <p class="detail-value">Senior GIS Analyst<br>Town of Marana, AZ</p>
+    </div>
+    <div class="detail-block">
+      <p class="detail-label">Education</p>
+      <p class="detail-value">PhD, Earth Science — Istanbul Technical University<br>MS, Earth Science — Uppsala University<br>BS, Geography (GIS) — University of Oregon</p>
+    </div>
+    <div class="detail-block">
+      <p class="detail-label">Research Interests</p>
+      <p class="detail-value">Geomorphology · Hydrology · Natural hazards · Glaciology</p>
+    </div>
+    <div class="detail-block">
+      <p class="detail-label">GIS Interests</p>
+      <p class="detail-value">Infrastructure · Transportation · Environmental Quality · Natural Hazards · Awesome Cartography</p>
+    </div>
+    <div class="detail-block">
+      <p class="detail-label">Software</p>
+      <p class="detail-value">ArcGIS Pro · ArcGIS Enterprise · QGIS · Python · Adobe Illustrator · Affinity Suite</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <h2 class="section-title" style="font-family:'Cormorant Garamond',serif; margin-bottom:2rem;">Get in Touch</h2>
+  <div class="contact-links">
+    <a class="contact-link" href="https://www.researchgate.net/profile/Kevin-Mcclain-2" target="_blank" rel="noopener">Research Gate</a>
+    <a class="contact-link" href="https://www.linkedin.com/in/kpm34/" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="contact-link" href="#">Download CV</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <svg class="mountain-silhouette" viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- Background ridge / far mountains -->
+    <path fill="var(--footer-mountain)" opacity="0.55" d="M0,160 L0,115 C60,112 120,108 180,105 C240,102 290,100 340,96 C390,92 430,88 470,84 C510,80 545,76 580,70 C615,64 645,57 680,50 C710,44 735,39 760,35 C785,31 810,29 840,32 C865,35 880,42 900,50 C918,57 930,64 950,68 C970,72 990,70 1015,66 C1040,62 1065,56 1095,52 C1120,48 1145,46 1175,50 C1200,54 1220,62 1250,72 C1275,80 1300,90 1330,100 C1360,108 1395,114 1440,118 L1440,160 Z"/>
+    <!-- Main mountain silhouette — prominent central peak with notched summit and right sub-peak -->
+    <path fill="var(--footer-mountain)" d="M0,160 L0,140 C50,138 100,136 150,133 C200,130 245,127 285,122 C320,118 350,113 380,107 C408,101 432,94 455,87 C478,80 498,73 520,65 C542,57 562,49 585,42 C605,36 622,31 642,28 C660,25 676,25 692,28 C706,31 718,37 730,44 C742,51 752,59 762,62 C772,65 782,63 793,58 C803,53 814,44 826,36 C838,28 851,20 866,13 C880,6 893,1 906,0 C917,-1 926,3 935,9 C944,15 951,24 958,30 C965,36 973,39 982,38 C991,37 1002,32 1013,27 C1024,22 1036,17 1050,15 C1062,13 1074,14 1085,19 C1096,24 1104,32 1114,38 C1124,44 1135,48 1150,50 C1165,52 1183,51 1205,55 C1225,59 1248,67 1275,78 C1300,88 1328,100 1360,112 C1385,121 1412,130 1440,136 L1440,160 Z"/>
+  </svg>
+</footer>
+
+
+</body>
+</html>
