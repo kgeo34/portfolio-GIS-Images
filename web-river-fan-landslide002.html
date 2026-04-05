@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>River, Fan &amp; Landslide Interactions — Kevin P. McClain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
+  <style>
+    :root {
+      --bg:        #E6F9F3;
+      --surface:   #A8F0D4;
+      --surface2:  #93E4C1;
+      --rule:      #7DCFAA;
+      --accent:    #2A6B50;
+      --accent2:   #1D4D39;
+      --ink:       #0F2D20;
+      --text-body: #1A3D2C;
+      --text-muted:#3D6B52;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text-body); font-family: 'DM Sans', sans-serif; font-weight: 300; font-size: 16px; line-height: 1.7; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--bg); border-bottom: 1px solid var(--rule);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 4vw; height: 60px;
+    }
+    .nav-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; letter-spacing: 0.04em; color: var(--accent2); text-decoration: none; }
+    .nav-back { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: var(--accent); }
+
+    .project-hero { padding: 110px 5vw 60px; max-width: 72%; }
+    .project-eyebrow { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+    .project-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.6rem, 3vw, 2.6rem); font-weight: 300; line-height: 1.25; color: var(--ink); margin-bottom: 1.2rem; }
+    .project-meta { display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .meta-item { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+    .meta-item strong { display: block; color: var(--accent); margin-bottom: 0.2rem; font-weight: 500; }
+
+    .project-content { max-width: 72%; padding: 0 5vw 80px; }
+
+    .figure-block { margin: 2.4rem 0; }
+
+    .img-link {
+      display: block; text-decoration: none;
+      border: 1px solid var(--rule); overflow: hidden;
+      background: var(--surface); position: relative; width: 100%;
+    }
+    .img-link::after {
+      content: '⤢ View full size';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 0.5rem 0.8rem;
+      background: rgba(15, 45, 32, 0.78);
+      color: var(--bg); font-size: 0.7rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .img-link:hover::after { opacity: 1; }
+    .img-link img { width: 100%; height: auto; display: block; transition: transform 0.35s ease; }
+    .img-link:hover img { transform: scale(1.01); }
+
+    .figure-number { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem; margin-top: 0.7rem; }
+    .img-caption { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.4rem; line-height: 1.65; }
+    .img-caption em { font-style: italic; }
+
+    .img-caption-two-col {
+      column-count: 2; column-gap: 2rem;
+      font-size: 0.97rem; color: var(--text-muted);
+      margin-top: 0.6rem; line-height: 1.75;
+    }
+    .img-caption-two-col p { font-size: inherit; color: inherit; margin-bottom: 0.8rem; line-height: inherit; break-inside: avoid; }
+    @media (max-width: 640px) { .img-caption-two-col { column-count: 1; } }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .tag { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; background: var(--surface); border: 1px solid var(--rule); color: var(--text-muted); padding: 0.3rem 0.7rem; }
+
+    .project-content h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; color: var(--ink); margin: 2.8rem 0 0.8rem; }
+    .project-content p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.2rem; line-height: 1.85; }
+    .project-content a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--rule); }
+    .project-content a:hover { border-color: var(--accent); }
+
+    .abstract-block {
+      border-left: 2px solid var(--rule);
+      padding-left: 1.4rem;
+      margin: 1.6rem 0 2.4rem;
+    }
+    .abstract-block p { font-size: 1.05rem; color: var(--text-body); line-height: 1.9; margin-bottom: 1.2rem; }
+    .abstract-block p:last-child { margin-bottom: 0; }
+
+    .pub-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.7rem 1.6rem; border: 1px solid var(--rule);
+      color: var(--accent2); text-decoration: none; font-size: 0.8rem;
+      letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.5rem;
+      transition: background 0.2s; border-bottom: none;
+    }
+    .pub-link:hover { background: var(--surface); }
+
+    .back-link { display: inline-block; margin: 2.4rem 0 0; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; border: none !important; }
+    .back-link:hover { color: var(--accent); }
+
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(15, 45, 32, 0.92);
+      align-items: center; justify-content: center;
+      padding: 2rem; cursor: zoom-out;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 100%; max-height: 90vh; object-fit: contain; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+    .lightbox-close {
+      position: absolute; top: 1.2rem; right: 1.6rem;
+      color: var(--rule); font-size: 1.6rem; cursor: pointer;
+      line-height: 1; background: none; border: none; font-family: sans-serif;
+    }
+
+    footer { padding: 1.6rem 4vw; background: var(--ink); color: var(--text-muted); font-size: 0.95rem; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    footer span { color: var(--rule); }
+
+    @media (max-width: 900px) {
+      .project-hero, .project-content { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-name">Kevin P. McClain, PhD</a>
+  <a href="../index.html#research" class="nav-back">← Back to Portfolio</a>
+</nav>
+
+<div class="project-hero">
+  <p class="project-eyebrow">PhD Research · EU Marie Curie Program · Published 2021</p>
+  <h1>River, alluvial fan and landslide interactions in a tributary junction setting: Implications for tectonic controls on Quaternary fluvial landscape development (Central Anatolian Plateau northern margin, Turkey)</h1>
+  <div class="project-meta">
+    <div class="meta-item"><strong>Type</strong>Scientific Article</div>
+    <div class="meta-item"><strong>Year</strong>2021</div>
+    <div class="meta-item"><strong>Tools</strong>OSL Dating · Cosmogenic Dating · LiDAR · ArcGIS · Illustrator · UAV · dGPS</div>
+    <div class="meta-item"><strong>Distribution</strong>Geomorphology (Elsevier)</div>
+  </div>
+</div>
+
+<div class="project-content">
+<h2>Abstract</h2>
+  <div class="abstract-block">
+    <p>Along the western flank of the northern margin (Central Pontides) of the Central Anatolian Plateau, the humidity from the Black Sea is much higher than the central and eastern flanks and creates a complex relationship between surface and tectonic processes by triggering intense mass wasting activity and aggradation within narrow valleys. We identified three incised fill terrace levels and used Optically Stimulated Luminescence (OSL) dating to calculate fluvial sediment ages and cosmogenic ³⁶Cl exposure dating to calculate limestone boulders exposure ages across the terrace surface.</p>
+    <p>Stratigraphical interpretations and OSL ages of the lowest levels revealed that a fluvial fill terrace formed in the main valley at 275.6 ± 12.8 ka and was overlain by a main river-tributary junction alluvial fan that was abandoned at 39.5 ± 3.5 ka. The results collectively show the influence of climate, topography, hillslope processes, and lithology on aggradation-incision patterns of main rivers. Prolonged aggradation can prevent the channel equilibrium required to calculate rock uplift rates while also causing a new base-level and aggradation upstream. This effect can be exacerbated in uplifting mountainous regions with limited depositional areas.</p>
+    <p>Bedrock incision rates based on the fluvial terrace age were between 0.15 and 0.2 mm/a since 39.5 ± 3.5 ka. However, the high aggradation within this segment of the main valley prevented incision of the channel bedrock for long periods, causing a potential underestimation of the rock uplift rate calculation. Our local period of aggradation appears to be related to increased aggradation and decreased bedrock incision rates measured 14 km upstream that were previously assumed to be the result of decreased tectonic uplift rates. This demonstrates the importance of corroborating strath terrace incision rate estimations with ages and incision rates of downstream fill terraces, if present, to check for potential interference with the tectonic signal.</p>
+  </div>
+
+  <!-- Figure 1 -->
+  <div class="figure-block">
+    <a class="img-link" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure8.png" data-lightbox>
+      <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure8.png" alt="Central Pontides previous studies" loading="lazy" decoding="async">
+    </a>
+    <p class="figure-number">Figure 1</p>
+    <p class="img-caption">Topographic map of the Central Pontides at the northern margin of the Central Anatolian Plateau. The study area is located on the hanging wall of the Karabük (reverse) Fault, which is under transpression from the ~250 km-long restraining bend of the North Anatolian Fault. The main river of the study (Filyos River) flows along the North Anatolian Fault before turning west and northwest, where it bisects the Karabük Range en route to the Black Sea. Previous rock uplift rates studies of the transpressional Central Pontides are depicted in captions, with sample locations at arrows. Red diamonds mark locations of major bedrock-walled canyons or gorges. However, these are not comprehensive due to the possibility of minor canyons in less accessible tributaries. Faults are illustrated with slip rates when known. A map of the study area is seen in Fig. 2 (white box). Topography and hillshade were generated from the Advanced Land Observation System (ALOS) 2 Digital Surface Model (2014). KF = Karabük Fault, KR = Karabük Range.<br><br>I used my own version of the viridis color ramp. The viridis ramp is a ramp that is readable in colorblind formats and prevents misleading visual interpretations regardless of colorblindness. It is often used to illustrate scientific data. I added a shade of light brown to the ramp for the highest elevations to give a greater effect of the topographic relief.</p>
+  </div>
+
+  <!-- Figure 2 -->
+  <div class="figure-block">
+    <a class="img-link" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure5.png" data-lightbox>
+      <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure5.png" alt="Local geomorphology map and diagram" loading="lazy" decoding="async">
+    </a>
+    <p class="figure-number">Figure 2</p>
+    <p class="img-caption">(a.) Topographic hillshade map of the study area, showing the tributary catchment of interest (Şimşir River) in relation to the main river. The contour interval in the tributary catchment is 100 m. The location of the two bedrock gorges are marked in yellow. (b.) Simplified map of the study area without topography. This map shows the arrangement of the study setting, with the Karabük Fault, fluvial terraces of McClain et al. (2020), and the main gorge located upstream to the east of the study area. It also shows the location of the tributary bedrock gorge and landslide of interest to the south, with the approximate fan location at the confluence with the main river. The modern channel elevations of the study area relative to the upstream study area are important when considering base-level changes and aggradation influence upstream.<br><br>My goal for this figure was to show the location of the upstream Filyos River Gorge and the catchment of the tributary suspected of supplying an alluvial fan at the junction with the main river valley (Filyos). The lower image was made to simplify the geomorphology of the environment.</p>
+  </div>
+
+  <!-- Figure 3 -->
+  <div class="figure-block">
+    <a class="img-link" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure6.png" data-lightbox>
+      <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure6.png" alt="Fluvial terrace levels" loading="lazy" decoding="async">
+    </a>
+    <p class="figure-number">Figure 3</p>
+    <p class="img-caption">Topographic map downstream from the Filyos River Gorge, showing the locations of fluvial terraces, landslides, possible extent of proposed alluvial fan, and Figs. 9 and 10 photo locations (a.). The main river (Filyos) flows westward and the tributary of interest (Şimşir) flows northward. A closer view of the floodplain area and tributary junction is mapped below (b.). The A-B topographic profile of Fig. 11 is depicted with a white dashed line. Landslides marked LA. and LB. are discussed in this paper as are the dashed intermittent channels adjacent to T2.</p>
+  </div>
+
+  <!-- Figure 4 -->
+  <div class="figure-block">
+    <a class="img-link" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure6.1.png" data-lightbox>
+      <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure6.1.png" alt="The large fluvial fill terrace at junction with alluvial fan" loading="lazy" decoding="async">
+    </a>
+    <p class="figure-number">Figure 4</p>
+    <p class="img-caption">UAV view of the junction terrace, which is part of T3, the lowest terrace level (top). Sample locations are labeled, the bedrock strath is marked in white, and the horizon between fluvial and alluvial fan layers is marked on the outcrop. Y-axes I, II, and III are marked at their locations and represent the axes in the middle illustration. Illustration of exposed alluvial and fluvial sediments in three sections (middle). Simplified illustration of the orientation of layers 1, 2, 3, and 7, which correspond to the progradation of a longitudinal bar (bottom).<br><br>Illustrating the stratigraphy like this in Adobe Illustrator took a long time. However, I think it was worth it. It organized the different sediment packages well. None of the sediment or exposure ages would have been meaningful here without analysis of the sediment facies.</p>
+  </div>
+
+  <!-- Figure 5 -->
+  <div class="figure-block">
+    <a class="img-link" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure7.png" data-lightbox>
+      <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure7.png" alt="LiDAR DSM from UAV showing fill terrace surface at alluvial fan junction" loading="lazy" decoding="async">
+    </a>
+    <p class="figure-number">Figure 5</p>
+    <p class="img-caption">Digital surface model (DSM) produced at the confluence of the Filyos (main) and Şimşir (tributary) rivers, showing the junction terrace (T3) location and the classification of different surface features that were confirmed based on elevation and field observations. A remnant of the valley infill is preserved where labeled 'D.' While most of it eroded where there are now broad floodplains, a 1 km² tributary junction alluvial fan is proposed to have formed downstream (north) of the tributary canyon (Şeker Canyon) and in the main river valley. The layers from this fan are preserved where the letter 'E' is marked. Sample ages of the fluvial terrace and the overlying alluvial fan layer are in the lower left and sample locations are on the map. The channel sample in the western margin of the DSM is the inheritance correction boulder, with an age of 0.92 ± 0.1 ka.<br><br>Although this high resolution DSM was useful for the study, it was more icing on the cake for this location. My intention was to fly the UAV further east towards the end of the Filyos River Gorge. I wanted to map all the fluvial fill terrace levels, but these flights were much more energy intensive than we realized and we ran out of battery. Since most of the key features were in the lower 100 meters, I wanted most of the viridis color ramp to amplify differences between floodplain and anything above it. Therefore I compressed the lower half of the color ramp and extended the colors above 257 m to a brown and gray.</p>
+  </div>
+
+  <!-- Figure 6 -->
+  <div class="figure-block">
+    <a class="img-link" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure7.1.png" data-lightbox>
+      <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure7.1.png" alt="OSL and 36Cl ages compared with paleoclimate records" loading="lazy" decoding="async">
+    </a>
+    <p class="figure-number">Figure 6</p>
+    <p class="img-caption">Sea level curves from MIS 11 through present, modified from Yıldırım et al. (2013b) and based on Bintanja et al. (2005), Siddall et al. (2006), and Shmuratko (2001) (A.). Humid interglacial periods are shaded blue and their terminations are based on Lisiecki and Raymo (2005). Simplified Sofular Cave δ¹⁸O stalagmite records, modified from Badertscher et al. (2011) (B.). Cosmogenic ³⁶Cl exposure ages of the limestone boulders on the junction terrace alluvial fan layer (C.). Calculations with various erosion rates are illustrated in Section C. OSL-sample ages and uncertainties of three coeval samples and their average age from the fluvial terrace/T3 sediments (D.). Evidence of water intrusions into the Black Sea from the Mediterranean and Caspian Seas from the nearby Sofular Cave (Badertscher et al., 2011) (E.).<br><br>I wanted to demonstrate when deposition would be more likely in this region. I used the color blue for warm periods (interglacials) because warm periods in this area are associated with higher precipitation. During cool periods, the Black Sea (lake) coastline is much farther from its current position, resulting in more arid conditions. It is important to correlate timing of sediment aggradation because cooler periods have less hillslope-stabilizing vegetation cover. Warm periods have more vegetation cover but also more potential for climatic events that could destabilize hillslopes.</p>
+  </div>
+
+  <!-- Figure 7 -->
+  <div class="figure-block">
+    <a class="img-link" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure8.1.png" data-lightbox>
+      <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/figure8.1.png" alt="Filyos Basin terrace ages compared with Central Pontides studies" loading="lazy" decoding="async">
+    </a>
+    <p class="figure-number">Figure 7</p>
+    <p class="img-caption">(Top) Landform ages from different rock uplift rate studies throughout the Central Pontides. Each number corresponds to locations in Fig. 1 and are arranged by distance from the North Anatolian Fault with number 6 located at the fault. (1.) Sinop Peninsula marine terrace ages from Yıldırım et al. (2013a). (2.) Kızılırmak Delta strath terrace, fill terrace, and delta terrace ages from Berndt et al. (2018). (3.) Gökırmak Basin strath terrace and pediment surface ages from Yıldırım et al. (2013b). (4.) Filyos River main river fill terrace and tributary junction alluvial fan ages of this study. (5.) Filyos River Gorge strath terrace ages upstream from this study from McClain et al. (2020). (6.) Kızılırmak River Valley fill terrace ages at the North Anatolian Fault in Hubert-Ferrari et al. (2019). Yeşilırmak Valley fluvial terrace ages south of the North Anatolian Fault from Erturaç and Kıyak (2017). (Bottom) Rock uplift rates through time at each study area. Colors correspond to the top section and the map in Fig. 1. The Gökırmak Basin has a long-term uplift rate reported as 0.28 mm/a and illustrated in the chart (Yıldırım et al., 2013b). However, a higher short-term uplift rate is seen in MIS 9 and is comparable in magnitude to other studies. It is also illustrated in the chart. The Sinop Peninsula reported rock uplift rates at three locations and therefore has three orange lines representing rock uplift rates in this chart (Yıldırım et al., 2013a). MIS stage boundaries are based on Lisiecki and Raymo (2005).<br><br>The purpose of this figure was to show the timing of terrace formations across the Central Pontides (top) and the calculated rock uplift rates from across the Central Pontides (bottom).</p>
+  </div>
+
+  <a class="pub-link" href="https://www.sciencedirect.com/science/article/abs/pii/S0169555X20305407?via%3Dihub" target="_blank" rel="noopener">For the full publication, visit Geomorphology (Elsevier) →</a>
+
+  <a href="../index.html#research" class="back-link">← Back to portfolio</a>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close">✕</button>
+  <img src="" alt="" id="lightbox-img">
+</div>
+
+<footer>
+  <span>Kevin P. McClain, PhD</span>
+
+</footer>
+
+<script>
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxClose = document.getElementById('lightbox-close');
+
+  document.querySelectorAll('[data-lightbox]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      lightboxImg.src = link.href;
+      lightboxImg.alt = link.querySelector('img').alt;
+      lightbox.classList.add('open');
+    });
+  });
+
+  lightboxClose.addEventListener('click', () => lightbox.classList.remove('open'));
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('open'); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') lightbox.classList.remove('open'); });
+</script>
+
+</body>
+</html>
