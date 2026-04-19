@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Printed Wall Maps — Kevin P. McClain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F5F0E8; --warm-off: #EDE7D9; --sand: #C9B99A;
+      --terracotta: #9E6B4A; --umber: #5C3D2E; --ink: #2A1F1A;
+      --light-rule: #D9CFBD; --text-body: #3D2E25; --text-muted: #8A7060;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); color: var(--text-body); font-family: 'DM Sans', sans-serif; font-weight: 300; font-size: 16px; line-height: 1.7; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--cream); border-bottom: 1px solid var(--light-rule);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 4vw; height: 60px;
+    }
+    .nav-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; letter-spacing: 0.04em; color: var(--umber); text-decoration: none; }
+    .nav-back { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: var(--terracotta); }
+
+    .project-hero { padding: 110px 4vw 60px; max-width: 1200px; margin: 0 auto; }
+    .project-eyebrow { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 1rem; }
+    .project-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300; line-height: 1.2; color: var(--ink); margin-bottom: 1.2rem; }
+    .project-meta { display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .meta-item { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+    .meta-item strong { display: block; color: var(--terracotta); margin-bottom: 0.2rem; font-weight: 500; }
+
+    .project-content { max-width: 1100px; padding: 0 4vw 80px; margin: 0 auto; }
+
+    /* Image grid */
+    .project-images { display: grid; gap: 12px; margin-bottom: 1rem; }
+    .project-images.one-up   { grid-template-columns: 1fr; }
+    .project-images.two-up   { grid-template-columns: 1fr 1fr; }
+    .project-images.three-up { grid-template-columns: 1fr 1fr 1fr; }
+    .project-images.four-up  { grid-template-columns: 1fr 1fr 1fr 1fr; }
+    @media (max-width: 800px) {
+      .project-images.three-up, .project-images.four-up { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 500px) {
+      .project-images.two-up, .project-images.three-up, .project-images.four-up { grid-template-columns: 1fr; }
+    }
+
+    /* Clickable image slots */
+    .img-link {
+      display: block;
+      text-decoration: none;
+      border: 1px solid var(--light-rule);
+      overflow: hidden;
+      background: var(--warm-off);
+      position: relative;
+    }
+    .img-link::after {
+      content: '⤢ View full size';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 0.5rem 0.8rem;
+      background: rgba(42, 31, 26, 0.72);
+      color: var(--cream);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .img-link:hover::after { opacity: 1; }
+    .img-link img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s ease;
+      aspect-ratio: 40/39;
+    }
+    .img-link:hover img { transform: scale(1.02); }
+
+    /* Wide landscape images (wall maps) get a better aspect ratio */
+    .img-link.landscape img { aspect-ratio: 16/9; }
+
+    .img-caption { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem; font-style: italic; }
+
+    /* Body text */
+    .project-content h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; color: var(--ink); margin: 2.4rem 0 0.8rem; }
+    .project-content p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.2rem; line-height: 1.85; }
+    .project-content a { color: var(--terracotta); text-decoration: none; border-bottom: 1px solid var(--sand); }
+    .project-content a:hover { border-color: var(--terracotta); }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .tag { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; background: var(--warm-off); border: 1px solid var(--light-rule); color: var(--text-muted); padding: 0.3rem 0.7rem; }
+
+    .back-link { display: inline-block; margin: 2rem 0; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; border: none !important; }
+    .back-link:hover { color: var(--terracotta); }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: rgba(42, 31, 26, 0.92);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      cursor: zoom-out;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 100%;
+      max-height: 90vh;
+      object-fit: contain;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 1.2rem; right: 1.6rem;
+      color: var(--sand);
+      font-size: 1.6rem;
+      cursor: pointer;
+      line-height: 1;
+      font-family: sans-serif;
+      background: none;
+      border: none;
+    }
+
+    footer { padding: 1.6rem 4vw; background: var(--ink); color: var(--text-muted); font-size: 0.95rem; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    footer span { color: var(--sand); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-name">Kevin P. McClain, PhD</a>
+  <a href="index.html#gis" class="nav-back">← Back to Portfolio</a>
+</nav>
+
+<div class="project-hero">
+  <p class="project-eyebrow">Town Reference Map · Town of Marana · 2022–2026</p>
+  <h1>Printed Wall Maps</h1>
+  <div class="project-meta">
+    <div class="meta-item"><strong>Type</strong>Town Reference Map</div>
+    <div class="meta-item"><strong>Years</strong>2022–2026</div>
+    <div class="meta-item"><strong>Tools</strong>ArcGIS Pro · Illustrator</div>
+    <div class="meta-item"><strong>Distribution</strong>Printed for Walls</div>
+  </div>
+</div>
+
+<div class="project-content">
+
+  <h2>Overview</h2>
+  <p>I am extremely lucky at the Town of Marana because I get almost total creative control over many cartographic works. I produce many maps where the requester articulates specific illustrative requirements, but much of the time I am trusted to take maps in whichever direction I desire. An example of this is our printed wall maps that are often hung in meeting spaces or department hallways.</p>
+  <p>Marana has a lot of empty space within its large borders. It has grown considerably from its origins in the northwest part of the city and expanded greatly to its east and south. This expansion includes many previously unincorporated suburban areas of Pima County which grew outside of Tucson. Therefore, the large and complex town boundary is always a main feature for any general map where municipal workers need to discuss areas. It has to be easy to follow.</p>
+  <p>The street network is the primary way people point to locations during discussion. Without the streets, there are very few recognizable human-made features. This makes it important to illustrate street hierarchy through different colors or line thicknesses, with Interstate-10 being the most bold, main streets bold, and surface streets thinner.</p>
+  <p>Marana has an abundance of park space inside the town limits, with important parks such as Saguaro National Park and Tortolita Mountain Park outside of the boundary. They are important to include. Connecting parks with people, there is also a good trail network that links with shared use paths, such as the famous "The Loop" that connects much of Tucson along its river banks. These shared use paths connect to HOA common area paths. Illustrating these paths brings Marana out of a pure-car dependent suburb to something that includes bicycles and pedestrian modes of transportation. It is important that they are included.</p>
+  <p>Finally, I always include the major river channels because they are recognizable natural features that are usually lined by shared use paths of "The Loop". The Santa Cruz River, in particular, has been the center of agriculture in this valley for over 4,000 years. This makes it one of the longest continuously cultivated agricultural spots in North America. It also has an important floodplain that has been used in modern times for pecan, cotton, and citrus farming. The basin is dominated by large alluvial fans that formed along the fronts of erosional mountain ranges, so the floodplain is an important break from these environments.</p>
+  <p>The downside of having total creative freedom is that I have never heard the words "colorblind safe" mentioned at the Town of Marana. As our organization grows, maps like this should begin using color combinations that are readable by colorblind people, which affects around 8% of men and 0.5% of women. For this reason I have grown to regret some of my color choices.</p>
+
+  <!-- 2025 wall map — full width -->
+  <div class="project-images one-up">
+    <div>
+      <a class="img-link landscape" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/E-Layout-2025-Sliced.jpg" data-lightbox>
+        <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/E-Layout-2025-Sliced.jpg" alt="Marana Printed Wall Map 2025">
+      </a>
+      <p class="img-caption">2025 edition wall map — displayed in meeting rooms and department hallways across the Town of Marana.</p>
+    </div>
+  </div>
+
+  <!-- 2022 cotton room map -->
+  <div class="project-images one-up">
+    <div>
+      <a class="img-link landscape" href="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/CottonRoom2022.png" data-lightbox>
+        <img src="https://cdn.jsdelivr.net/gh/kgeo34/portfolio-GIS-Images@main/CottonRoom2022.png" alt="Marana Cotton Room Wall Map 2022">
+      </a>
+      <p class="img-caption">2022 edition — an earlier iteration that informed the visual language of subsequent wall maps.</p>
+    </div>
+  </div>
+
+  <a href="index.html#gis" class="back-link">← Back to portfolio</a>
+</div>
+
+<!-- Lightbox overlay -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close">✕</button>
+  <img src="" alt="" id="lightbox-img">
+</div>
+
+<footer>
+  <span>Kevin P. McClain, PhD</span>
+</footer>
+
+<script>
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxClose = document.getElementById('lightbox-close');
+
+  document.querySelectorAll('[data-lightbox]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      lightboxImg.src = link.href;
+      lightboxImg.alt = link.querySelector('img').alt;
+      lightbox.classList.add('open');
+    });
+  });
+
+  lightboxClose.addEventListener('click', () => lightbox.classList.remove('open'));
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) lightbox.classList.remove('open');
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') lightbox.classList.remove('open');
+  });
+</script>
+
+</body>
+</html>
